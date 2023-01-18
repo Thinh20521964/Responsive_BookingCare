@@ -1,0 +1,154 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block extra_head %}
+    <style>
+    td h1{
+        font-size: 25px;
+        font-weight : bold;
+        line-height:2;
+        color : black;
+    }
+    h6 {
+        font-size: 16px;
+        font-weight: lighter;
+        color : black;
+    }
+    th, td {
+        text-align: left;
+        padding : 8px 8px;
+        background-color: #ffffff;
+    }
+    .choiceDay{
+        padding : 20px 0px;
+        margin-left: 20px;
+    }
+    .choiceDay label {
+        display: none;
+    }
+    .selectDay{
+        height: 30px;
+        width: 15%;
+        text-align: center;
+        font-weight : bold;
+        border: 1px solid black;
+        border-radius:20px;
+    }
+
+    .timeAndAddress{
+        display : flex;
+        padding: 30px 30px;
+    }
+    .choiceTime {
+        padding: 0px 120px 0px 0px;
+    }
+    
+    .choiceTime a{
+        margin: 10px;
+        min-width: 157px;
+        background: #fff04b;
+        line-height: 5;
+        display: inline-block;
+        text-align: center;
+        color: #333;
+        font-weight: bolder;
+    }
+    .address{
+        padding: 50px 10px;
+    }
+    .detail{
+        padding: 30px;
+    }
+    .inforDoctor, .schedule{
+        background: #fff;
+    }
+    table{
+        padding: 10px 0px 10px 50px;
+
+    }
+    .martor_preview li
+    {
+        margin-left:30px;
+    }
+    .martor_preview h4
+    {
+        font-weight: bolder;
+        font-size:19px;
+    }
+    </style>
+{% endblock extra_head %}
+{% block content %} 
+    <div class="inforDoctor">
+        <table>
+            <tr>
+                <td>
+                    <img src="/media/{{doctor.doctor.avatar}}"
+                         alt="{{ doctor.degree }} {{ doctor.doctor.last_name }} {{ doctor.doctor.first_name }}"
+                         style="border-radius:50%;width:180px;height:160px">
+                </td>
+                <td>
+                    <h1>{{ doctor.degree }} {{ doctor.doctor.last_name }} {{ doctor.doctor.first_name }}</h1>
+                    <hr>
+                    <h6>
+                        {{ doctor.description }}
+                    </h6>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="schedule">
+        <div class="choiceDay">
+            <form id="search_schedule" action="" method="get">
+                {% csrf_token %}
+                <label for="selectDate">Choose a pet:</label>
+                <select class="selectDay" name="dateChoices" id="selectDate" onchange="showTimeslot();">
+                </select>
+                <input type="submit" id="submit-btn" value="Submit" style="display: none;"/>
+            </form>
+        </div>
+        <div class="timeAndAddress">
+            <div class="choiceTime">
+            </div>
+            <div class="address">
+                <h4>ĐỊA CHỈ KHÁM</h4>
+                <h6>{{ doctor.clinic.name }}</h6>
+                <h8>
+                {{ doctor.clinic.address }}
+                </h8>
+                <hr>
+                <h4>GIÁ KHÁM: {{ doctor.examination_price }}</h4>
+            </div>
+        </div>
+        <hr style="border-width: 3px;border-style: inset;">
+    </div>
+    <div class="detail">
+        {% load martortags %}
+        <div class="martor_preview" id="content">
+            {{ doctor.background | safe_markdown}}
+        </div>
+    </div> 
+{% endblock content %}
+{% block extra_script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.6/dayjs.min.js" integrity="sha512-hcV6DX35BKgiTiWYrJgPbu3FxS6CsCjKgmrsPRpUPkXWbvPiKxvSVSdhWX0yXcPctOI2FJ4WP6N1zH+17B/sAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.6/locale/vi.min.js" integrity="sha512-z+cfgsx3y2byh1WqQA03XQHxtM48Km+N1tRoJGX4xWBa29cD8du/Imistc6DY7rzcMw5YLMereWcvzZw5uNB6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="{% static 'doctors/js/detailDoctor.js' %} "></script>
+
+    {% comment %} Search schedule {% endcomment %}
+    <script type="text/javascript" >
+        searchScheduleForm.onsubmit = async function (e) {
+            e.preventDefault();
+
+            if(choiceTime.innerHTML) choiceTime.innerHTML = `<h4>LỊCH KHÁM</h4>`;
+
+            const query = select.value;
+            const doctor_id = {{doctor.doctor.id}};
+            const schedules = await search_schedule(csrfmiddlewaretoken, query, doctor_id);
+
+            const detailDoctor_id = {{doctor.id}}
+            show_schedule(`/bookings/${detailDoctor_id}/`, schedules);
+          };
+
+        window.onload = (e) => {
+            submitBtn.click();
+        };
+    </script>
+{% endblock extra_script %}

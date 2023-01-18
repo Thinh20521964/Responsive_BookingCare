@@ -1,0 +1,100 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block extra_head %}
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+    h3 
+    {
+        font-size: 16px;
+        font-weight: lighter;
+        margin-top: 0px;
+    }
+    .content
+    {
+        padding: 10px 15px;
+        background: #fff;
+    }
+    table 
+    {
+        border-collapse: collapse;
+        width: 40%;
+    }
+    th, td 
+    {
+        text-align: left;
+        padding-top: 8px;
+        padding-left: 8px;
+        padding-bottom: 8px;
+        padding-right: 8px;
+        background-color: #ffffff;
+    }
+    .content hr 
+    {
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+    .search input
+    {
+        width:100%;
+        border-radius:14px;
+        border: 1px rgb(148, 147, 147) solid;
+        height: 30px;
+        padding-left: 10px;
+    }
+    .search label{
+        display: none;
+    }
+    .search
+    {
+        padding: 20px 15px;
+        background: #fff;
+        background-color:#f5f5f5;
+    }
+    .content hr
+    {
+        border-top: 1px solid #e2e1e1;
+    }
+    img
+    {
+        width:100px;
+        height:67px;
+    }
+
+    </style>
+{% endblock extra_head %}
+{% block content %}
+<div class="search">
+    <form id="search_form" action="" method="get"> 
+        {% csrf_token %} 
+        {{form}}
+        <input type="submit" id="submit-btn" value="Submit" style="display: none;"/>
+    </form>
+</div>
+<div class="content">
+    <h3 style="font-weight:bold">Thông tin các chuyên khoa: </h3>
+    {% for specialist in specialist_list %}
+    <table>
+        <tr>
+            <td>
+                <a href="{% url 'specialistDetail' specialist.id %}">
+                    <img src="/media/{{specialist.avatar}}" alt="{{ specialist.name }}" loading="lazy">
+                </a>
+            </td>
+            <td style="text-align:left;width: 90%;">
+                <a href="{% url 'specialistDetail' specialist.id %}">
+                    <h3>{{ specialist.name }}</h3>
+                </a>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    {% endfor %}
+</div>
+{% endblock content %}
+{% block extra_script %}
+    <script type="text/javascript" src="{% static 'specialists/js/main.js' %} "></script>
+{% endblock extra_script %}

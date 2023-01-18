@@ -1,0 +1,101 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'specialists/css/style_detail_specialist.css' %}">
+<title>Cơ xương khớp</title>
+<style>
+    .abstract_scope_image 
+    {
+        background-image: url(/media/{{specialist.avatar}});
+        background-repeat: no-repeat;
+        background-size: cover;
+        image-rendering: -webkit-optimize-contrast;
+    }
+</style>
+{% endblock extra_head %}
+
+{% block content %}
+{% load martortags %}
+<div class="specialist_scope">
+    <div class="abstract_scope_image">
+        <div class="abstract_scope_info">
+            <div class="martor_preview" id="content">
+                {{ specialist.description | safe_markdown}}
+            </div>
+            <button class="buttonshowhide" id="toggle" onclick="myFunction()">Ẩn bớt</button> 
+        </div>
+    </div>
+</div>
+
+<div class="select_doctor_scope">
+    <div class="doctor_area">
+        <div class="section_doctor">
+            {% for doctor in specialist.specialist_doctors.all %}
+            <div class="each_doctor">
+                <div class="abstract_doctor">
+                    <div class="image_scope">
+                        <img class="image_doctor" src="/media/{{doctor.doctor.avatar}}" width="80px" height="80">
+                    </div>
+                    <div class="info_doctor">
+                        <div class="name">
+                            <h2>{{doctor.degree}} {{doctor.doctor.last_name}} {{doctor.doctor.first_name}}</h2>
+                        </div>
+                        <div class="intro_doctor">
+                            {{doctor.descriptions|safe_markdown}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="register_scope">
+                    <div class="register_scope1">
+                        <h3><i class="icon-dichvu bt-g bt-g-lich glyphicon glyphicon-calendar"></i>Thông tin</h3>
+                    </div>
+                    <div class="register_scope2">
+                        <a href="{% url 'doctorDetail' doctor.id %}">Đăng ký khám</a>
+                        <p>Chọn và đặt ngay, phí dịch vụ đặt lịch 0đ</p>
+                        <p>Giá khám: {{doctor.examination_price}}</p>
+                    </div>
+                    <div class="address">
+                        <h3>Địa chỉ khám</h3>
+                        <p style="margin-bottom:0px;">{{doctor.clinic}}</p>
+                        <p style="margin-bottom:0px;">{{doctor.clinic.address}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_script %}
+<script type="text/javascript">
+    function myFunction() {
+        var change = document.getElementById("toggle");
+        var second_h4 = document.querySelector(".martor_preview h4:nth-last-child(2)")
+        var first_ul = document.querySelector(".martor_preview ul:last-child")
+        if (change.innerHTML == "Ẩn bớt")
+        {
+            change.innerHTML = "Đọc thêm";
+            first_ul.style.display = 'none'
+            second_h4.style.display = 'none'
+        }
+        else {
+            change.innerHTML = "Ẩn bớt";
+            first_ul.style.display = 'block'
+            second_h4.style.display = 'block'
+        }
+    }
+</script>
+
+<script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
+<script>
+    $('.martor-preview pre').each(function(i, block){
+        hljs.highlightBlock(block);
+    });
+</script>
+{% endblock extra_script %}
+
+{% comment %} 
+{% endcomment %}

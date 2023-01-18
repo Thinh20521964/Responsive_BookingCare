@@ -1,0 +1,486 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+    .abstract_scope
+    {
+        padding: 0;
+
+    }
+    h1 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    p,li{
+        font-size: 14px;
+        font-weight: lighter;
+    }
+    body
+    {
+        background-color: #ffffff;
+        margin: 0;
+        font-size: 28px;
+        font-family: Arial, Helvetica, sans-serif;
+        opacity:0.9;
+    }
+    .footer{
+        padding: 0px 240px; 
+        display :flex;
+        background-color: #e7e7e7;
+    }
+    .footerAddress{
+        margin: 0px 250px;
+    }
+    #navbar
+    {
+        overflow: hidden;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 10px 4px -8px rgba(0, 0, 0, 0.4);
+    }
+
+    #navbar a
+    {
+        float: left;
+        display: block;
+        color: #363434;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 20px;
+    }
+
+    #navbar a:hover
+    {
+        background-color: rgb(216, 216, 216);
+        color: black;
+    }
+
+    #navbar a.active
+    {
+        padding-top: 10px;
+        background-color: #8d8e8e;
+        color: white;
+    }
+    
+    .active
+    {
+        padding-top: 5px;
+        padding-left: 5px;
+    }
+    .content
+    {
+        padding: 40px;
+    }
+    
+    .sticky
+    {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        
+    }
+    
+    .sticky + .content
+    {
+        padding-top: 60px;
+        box-shadow: 10px, 10px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 30%;
+        
+        }
+
+    th, td {
+        text-align: left;
+        padding-top: 8px;
+        padding-left: 8px;
+        padding-bottom: 8px;
+        padding-right: 8px;
+        background-color: #ffffff;
+    }
+
+    hr {
+        width: 100%;
+    }
+    .abstract_scope_image {
+        background-image: url(https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        image-rendering: -webkit-optimize-contrast;
+    }
+    .abstract_scope_info
+    {
+        padding-left: 200px;
+        padding-top: 60px;
+        padding-right: 190px;
+        padding-bottom: auto;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.7),rgba(255, 255, 255, 0.8),rgba(255, 255, 255, 1));
+    }
+    
+    .specialist_scope{
+        margin: 0px;
+        padding: 0px;
+        margin-top:10px;
+    }
+    .chonbacsi
+    {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+        background-color: red;
+        opacity:1;
+    }
+    .choose{
+        padding: 10px 0;
+    }
+
+    .doctorsomeinfo
+    {
+        margin-top:10px;
+        margin-left:180px;
+        margin-right:200px;
+        background-color: aquamarine;
+    }
+    .doctor_scope
+    {
+        margin-left: 50px;
+        margin-right:50px;
+    }
+    .eachDoctor
+    {
+        background-color: #fff;
+        box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+        border-radius: 8px;
+        border-bottom: none;
+        margin-bottom: 10px;
+        display:flex;
+    }
+
+    .chooseDoctor_scope{
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: 100px;
+        margin-left: 100px;
+        width:930x;
+    }
+
+    .abstract_doctor
+    {
+        border-right: 1px solid #eee;
+        padding-right: 10px;
+        padding-top: 15px;
+        padding-left:15px;
+        padding-bottom: 15px;
+        width:53%;
+        box-sizing: border-box;
+
+    }
+    .image_scope
+    {
+        padding-right: 15px;
+        text-align: center;
+        display: table-cell;
+        vertical-align: top;;
+    }
+    .infoAbstract{
+        display: table-cell;
+        vertical-align: top;
+    }
+    .select_hour
+    {
+        color: #666;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 15px;
+        margin: 0;
+        display: block;
+    }
+    .image_doctor
+    {
+        border-radius: 50%;
+        min-width: 80px;
+        
+    }
+    .schedule_and_cost
+    {
+        width: 47%;
+        float: right;
+    }
+    .infoRegister_modifyScope
+    {
+        padding: 15px 15px 10px 15px;
+        margin:0px;
+        box-sizing: border-box;
+    }
+    .register_scope1
+    {
+        padding: 0px 15px 15px 15px;
+        display: block;
+    }
+    .register_scope2
+    {
+        padding: 0px;
+        margin: 0px;
+        display:block;
+    }
+    .cost{
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+        margin-top: 10px;
+        display: block;
+        font-size: 14px;
+    }
+    sup{
+        position: static;
+    }
+    i{
+        position: static;
+    }
+    .header_image
+    {
+        padding:0px;
+        margin-left: 170px;
+        margin-right: 170px;
+        margin-top: 50px;
+        background-color: rgb(255, 255, 255);
+
+    }
+    .infoClinic_andNavi
+    {
+        padding: 0px;
+        margin-left:175px;
+        margin-right:175px;
+        background-color: #ffffff;
+    }
+    .infoClinic{
+        padding:10px 0;
+    }
+    .Navi{
+        padding: 0px 30px;
+        margin:0px;
+        box-shadow: 0 10px 4px -8px rgba(0, 0, 0, 0.4);
+    }
+    ul.horizontal-list {
+        list-style: none;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        display: table-cell;
+        padding: 0rem 3rem;
+        margin-top: 0rem;
+        margin-left: 250px;
+        margin-right: 250px;
+    }
+
+    ul.horizontal-list li {
+        display: table-cell;
+        padding: 0 1rem;
+        min-width: 7rem;
+        text-align: center;
+        cursor: pointer;
+    }
+    .intro_BC{
+        padding: 12px 12px 20px 56px;
+        margin: 15px 0;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        font-size: 14px;
+        border-color: #d6e9c6;
+        color: #3c763d;
+        background-color: #dff0d8;
+    }
+    .suggest_clinic
+    {
+        padding: 15px;
+        background: #ffc;
+        margin-bottom: 20px;
+    }
+    .icon_bulb
+    {
+        background: no-repeat url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iaWNfeDVGX2xpZ2h0YnVsYl94NUZfZmlsbF94NUZfMjRweCINCgkgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI0OHB4IiBoZWlnaHQ9IjQ4cHgiDQoJIHZpZXdCb3g9IjAgMCAyNCAyNCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjQgMjQiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGc+DQoJCTxwYXRoIGQ9Ik05LDIxYzAsMC41LDAuNCwxLDEsMWg0YzAuNiwwLDEtMC41LDEtMXYtMUg5VjIxeiBNMTIsMkM4LjEsMiw1LDUuMSw1LDljMCwyLjQsMS4yLDQuNSwzLDUuN1YxN2MwLDAuNSwwLjQsMSwxLDFoNg0KCQkJYzAuNiwwLDEtMC41LDEtMXYtMi4zYzEuOC0xLjMsMy0zLjQsMy01LjdDMTksNS4xLDE1LjksMiwxMiwyeiIgZmlsbD0iI2VhODYwMCIvPg0KCTwvZz4NCjwvZz4NCjxyZWN0IGZpbGw9Im5vbmUiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIvPg0KPC9zdmc+DQo=);
+        background-size: 24px;
+        content: '';
+        height: 24px;
+        margin-left: -40px;
+        position: static;
+        width: 24px;
+    }
+    .description_markdown li
+    {
+        margin-left:30px;
+    }
+    .description_markdown h4
+    {
+        font-weight: bolder;
+        font-size:19px;
+    }
+    .description_markdown h2
+    {
+        font-size:15px;
+        font-weight:bold;
+        color: #337ab7;
+        margin-top:40px
+    }
+    .description_markdown img
+    {
+        width: 60%;
+        height: 50%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock extra_head %}
+{% block content %}
+<div class="infoClinic_andNavi">
+    <div class="infoClinic">
+        <img src="/media/{{ clinics.avatar }}"
+             style="height:120px;
+                    width:120px;
+                    display:inline-block;
+                    border-style: solid;
+                    border-color: #e6e6e6;
+                    border-width: 1px;">
+        <h3 style="display:inline-block;font-size: 18px;font-weight: bold;">
+            {{ clinics.name }}
+            <br>
+            <i style="display:inline;font-size: 10px;position:static"
+               class="bt-g bt-g-diadiem glyphicon glyphicon-map-marker"></i>
+            <span style="font-size:10px;font-weight:lighter">{{ clinics.address }}</span>
+        </h3>
+    </div>
+    <hr style="margin:0px;">
+    <div class="Navi">
+        <ul class="horizontal-list">
+            <li>
+                <a href="#datlichkham">ĐẶT LỊCH KHÁM</a>
+            </li>
+            <li>
+                <a href="#gioithieu">GIỚI THIỆU</a>
+            </li>
+            <li>
+                <a href="#themanh">THẾ MẠNH CHUYÊN MÔN</a>
+            </li>
+            <li>
+                <a href="#thietbi">TRANG THIẾT BỊ</a>
+            </li>
+            <li>
+                <a href="#vitri">VỊ TRÍ</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="specialist_scope">
+    <!--Select choose doctor to register-->
+    <div class="chooseDoctor_scope">
+        <!--Choose doctor scope-->
+        <div class="doctor_scope">
+            <div class="intro_BC">
+                <div class="icon_bulb"></div>
+                BookingCare là Nền tảng Y tế chăm sóc sức khỏe toàn diện hàng đầu Việt Nam kết nối người dùng với trên 150 bệnh viện - phòng khám uy tín, hơn 1,000 bác sĩ chuyên khoa giỏi và hàng nghìn dịch vụ, sản phẩm y tế chất lượng cao.
+            </div>
+            <div class="suggest_clinic">
+                <p>Hãy đặt khám với {{ clinics.name }} trên Nền tảng Y tế Chăm sóc sức khỏe toàn diện BookingCare:</p>
+                <ul>
+                    <li>Được lựa chọn khám với các bác sĩ chuyên khoa giàu kinh nghiệm, dịch vụ y tế chất lượng</li>
+                    <li>Đặt hẹn trực tuyến & nhận hướng dẫn chi tiết trước khi đi khám (miễn phí)</li>
+                    <li>Giảm thiểu thời gian chờ đợi</li>
+                </ul>
+            </div>
+            {% for doctor in clinics.clinic_doctors.all %}
+            <!--Each doctor scope-->
+            <div class="eachDoctor" id="datlichkham">
+                <!--Abstract doctor--> 
+                <div class="abstract_doctor">
+                    <div class="image_scope">
+                        <img class="image_doctor"
+                             src="/media/{{ doctor.doctor.avatar }}"
+                             width="80px"
+                             height="80">
+                        <div style="margin-top:5px;
+                                    font-size: 12px;
+                                    text-align: left;
+                                    padding-left:7px;">
+                        </div>
+                    </div>
+                    <div class="infoAbstract">
+                        <h2 style="color:#45c3d2;font-size:18px">{{ doctor.degree }} {{ doctor.doctor.last_name }} {{ doctor.doctor.first_name }}</h2>
+                        <p>
+                            {{ doctor.descriptions }}
+                        </p>
+                    </div>
+                </div>  
+                <!--End Abstract doctor-->
+                <!--Register Info-->
+                <div class="infoRegister">
+                    <div class="infoRegister_modifyScope">
+                        <div class="register_scope1">
+                            <h3 style="text-transform: uppercase;font-size: 14px;color: #333;font-weight: bold;padding: 0;margin: 0 0 5px 0;position:static">
+                                <i style="position:static"
+                                   class="icon-dichvu bt-g bt-g-lich glyphicon glyphicon-calendar"></i>Lịch khám
+                            </h3>
+                        </div>
+                        <div class="register_scope2">
+                            <a style="display: block;
+                                      overflow-x: visible;
+                                      white-space: normal;
+                                      padding: 10px;
+                                      width: 200px;
+                                      font-size: 14px;
+                                      border-style: solid;
+                                      display: block;
+                                      margin-left: 15px;
+                                      text-align: center;"
+                               href="{% url 'doctorDetail' doctor.id %}">Đăng ký khám</a>
+                            <p style="margin-left:10px;margin-top:10px;">Chọn và đặt ngay, phí dịch vụ đặt lịch 0đ</p>
+                        </div>
+                        <div class="address"
+                             style="border-top: 1px solid #eee;
+                                    padding-top: 10px;
+                                    margin-top: 10px;">
+                            <h3 style="text-transform: uppercase;
+                                       font-size: 14px;
+                                       color: #666;
+                                       font-weight: bold;
+                                       margin-top:10px;">
+                                Địa chỉ khám
+                            </h3>
+                            <p style="margin-bottom:0px;">
+                                {{ doctor.clinic }}
+                                <br>
+                                {{ doctor.clinic.address }}
+                            </p>
+                        </div>
+                        <div class="cost">
+                            <h3 style="text-transform: uppercase;
+                                       font-size: 14px;
+                                       color: #666;
+                                       font-weight: bold;
+                                       display:inline;">Giá khám:</h3>
+                            <span id="doctor_exam_price">{{ doctor.examination_price }}</span>
+                        </div>
+                    </div>
+                </div>
+                <!--End Register Info-->
+            </div>
+            <!--End Each doctor scope-->
+            {% endfor %}
+            <hr style="margin-bottom:10px;margin-top:10px">
+            {% load martortags %}
+            <div class="description_markdown">
+                {{ clinics.description | safe_markdown}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extra_script %}
+    <script type="text/javascript" src="{% static 'clinics/js/addAttribute.js' %} "></script>
+{% endblock extra_script %}

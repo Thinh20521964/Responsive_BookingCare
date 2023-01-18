@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>[NT208.N11.ANTT] - Group04_Booking Care</title>
+        {% block extra_head %}
+        {% endblock extra_head %}
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'homepage/css/base.css' %}">
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'homepage/css/font.css' %}">
+        <link rel="icon"
+              type="image/png"
+              href="{% static 'homepage/images/favicon.png' %}"/>
+    </head>
+    <body>
+        <div id="main-wrapper">
+            <header>
+                <div id="main-title">
+                    <i class="list-icon"></i>
+                    <div class='bookingcare-logo'>
+                        <a href="{% url 'homepage' %}">&af;</a>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="{% url 'findSpecialist' %}">
+                                Chuyên khoa
+                                <span>Tìm bác sĩ theo chuyên khoa</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'findClinic' %}">
+                                Cơ sở y tế
+                                <span>Chọn bệnh viện phòng khám</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'findDoctor' %}">
+                                Bác sĩ
+                                <span>Chọn bác sĩ giỏi</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="support-lang-user">
+                    <a href="#">
+                        <i class='support-icon' style='margin-right: 3px;'></i>
+                        Hỗ trợ
+                    </a>
+                    {% comment %} <i class="notify-icon"><span class="notify-badge">99+</span></i> {% endcomment %}
+                    <i class="lang-icon"></i>
+                    {% if user.is_authenticated %}
+                        {% if user.avatar %}
+                            <img src="{{user.avatar.url}}" alt="user-avatar" class="user-icon">
+                        {% else %}
+                            <img src="{% static 'homepage/icons/icons8-user.svg' %}" alt="user-avatar" class="user-icon" style="object-fit: contain;">
+                        {% endif %}
+                        <div id="user-dropdown">
+                            <a href="{% url 'profile' %}">Hồ sơ</a>
+                            <a href="{% url 'signout' %}">Đăng xuất</a>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'signin' %}">Đăng nhập</a>
+                        <a href="{% url 'signup' %}">Đăng ký</a>
+                    {% endif %}
+                </div>
+            </header>
+            <main>
+                {% block content %}
+                {% endblock content %}
+            </main>
+            <footer>
+                <div id='contact'>
+                    <div id='contact__one'>
+                        <div class='bookingcare-logo'>
+                            <a href="{% url 'homepage' %}">&af;</a>
+                        </div>
+                        <div id="company">
+                            <h4>
+                                Công ty Cổ phần Công nghệ BookingCare
+                            </h5>
+                            <p>
+                                <i class='location-icon'></i> 28 Thành Thái, Dịch Vọng, Cầu Giấy, Hà Nội
+                            </p>
+                            <p>
+                                <i class='checked-icon'></i> ĐKKD số: 0106790291. Sở KHĐT Hà Nội cấp ngày 16/03/2015
+                            </p>
+                        </div>
+                        <div id="licence">
+                            <i class="bo-cong-thuong-icon"><a href="#">&af;</a></i>
+                            <i class="bo-cong-thuong-icon"><a href="#">&af;</a></i>
+                        </div>
+                    </div>
+                    <div id='contact__two'>
+                        <ul>
+                            <li>
+                                <a href="#">Liên hệ hợp tác</a>
+                            </li>
+                            <li>
+                                <a href="#">Gói chuyển đổi số doanh nghiệp</a>
+                            </li>
+                            <li>
+                                <a href="#">Tuyển dụng</a>
+                            </li>
+                            <li>
+                                <a href="#">Câu hỏi thường gặp</a>
+                            </li>
+                            <li>
+                                <a href="#">Điều khoản sử dụng</a>
+                            </li>
+                            <li>
+                                <a href="#">Chính sách Bảo mật</a>
+                            </li>
+                            <li>
+                                <a href="#">Quy trình hỗ trợ giải quyết khiếu nại</a>
+                            </li>
+                            <li>
+                                <a href="#">Quy chế hoạt động</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id='contact__three'>
+                        <div>
+                            <h4>Trụ sở tại Hà Nội</h4>
+                            <p>28 Thành Thái, Dịch Vọng, Cầu Giấy, Hà Nội</p>
+                        </div>
+                        <div>
+                            <h4>Văn phòng tại TP Hồ Chí Minh</h4>
+                            <p>Số 01, Hồ Bá Kiện, Phường 15, Quận 10</p>
+                        </div>
+                        <div>
+                            <h4>Hỗ trợ khách hàng</h4>
+                            <p>support@bookingcare_124C41.vn (7h - 18h)</p>
+                        </div>
+                    </div>
+                </div>
+                <div >
+                    <hr>
+                    <p>
+                        <i class='phone-icon'></i>
+                        Tải ứng dụng BookingCare cho điện thoại hoặc máy tính bảng:
+                        <a href="#">&MediumSpace;Android</a> -
+                        <a href="#">iPhone/iPad</a> -
+                        <a href="#">Khác</a>
+                    </p>
+                </div>
+                <div id="copyright">
+                    <div>
+                        <i class="copyright-icon"></i> 2022 BookingCare - Group 124C41
+                    </div>
+                    <div>
+                        <i class='fb-icon' style='cursor: pointer; margin-right: 4px'><a href="#">&af;</a></i>
+                        <i class='ytb-icon' style='cursor: pointer;'><a href="#">&af;</a></i>
+                    </div>
+                </div>
+            </footer>
+            <section class="modal js-modal">
+                <div class="homepage-modal-container js-modal-container">
+                    <div class="homepage-modal-container__main">
+                        <ul>
+                            <li>
+                                <a href="{% url 'homepage' %}">Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'findSpecialist' %}">Chuyên khoa</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'findClinic' %}">Cơ sở y tế</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'findDoctor' %}">Bác sĩ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        {% comment %} Javascript {% endcomment %}
+        <script type="text/javascript">
+            //Sidebar modal
+            const listIcon = document.querySelector('.list-icon');
+            const modal = document.querySelector('.js-modal');
+            const modalContainer = document.querySelector('.js-modal-container');
+
+            listIcon.onclick = function () {
+                modal.classList.add('show-homepage-modal');
+            };
+
+            modal.onclick = function () {
+                modal.classList.remove('show-homepage-modal');
+            };
+
+            modalContainer.onclick = function (event) {
+                event.stopPropagation();
+            };
+
+            //User dropdown
+            const usericon = document.querySelector('.user-icon');
+            const userDropdown = document.querySelector('#user-dropdown');
+
+            if (usericon && userDropdown) {
+                usericon.addEventListener('click', function () {
+                    if (!userDropdown.classList.contains('show-user-dropdown'))
+                    userDropdown.classList.add('show-user-dropdown');
+                    else userDropdown.classList.remove('show-user-dropdown');
+                });
+            };
+
+            //Search
+            async function get_search_result(url){
+                const res = await fetch(url);
+                const data = await res.json();
+                return data
+            };
+
+            async function search_specialist(csrfmiddlewaretoken, query){
+                const data = await get_search_result(`search-specialist/?csrfmiddlewaretoken=${csrfmiddlewaretoken}&query=${query}`);
+                return data;
+            };
+
+            async function search_clinic(csrfmiddlewaretoken, query) {
+                const data = await get_search_result(
+                  `search-clinic/?csrfmiddlewaretoken=${csrfmiddlewaretoken}&query=${query}`
+                );
+                return data;
+              }
+              
+              async function search_doctor(csrfmiddlewaretoken, query) {
+                const data = await get_search_result(
+                  `search-doctor/?csrfmiddlewaretoken=${csrfmiddlewaretoken}&query=${query}`
+                );
+                return data;
+              }
+
+              async function search_schedule(csrfmiddlewaretoken, query, doctor_id) {
+                const data = await get_search_result(
+                  `search-schedule/?csrfmiddlewaretoken=${csrfmiddlewaretoken}&query=${query}&doctor_id=${doctor_id}`
+                );
+                return data;
+              }
+
+              //Format date
+              function get_day_of_week(day) {
+                switch (day) {
+                  case 1:
+                    return 'Thứ hai';
+                    break;
+                  case 2:
+                    return 'Thứ ba';
+                    break;
+                  case 3:
+                    return 'Thứ tư';
+                    break;
+                  case 4:
+                    return 'Thứ năm';
+                    break;
+                  case 5:
+                    return 'Thứ sáu';
+                    break;
+                  case 6:
+                    return 'Thứ bảy';
+                    break;
+                  default:
+                    return 'Chủ nhật';
+                }
+              }
+
+        </script>
+        {% block extra_script %}
+        {% endblock extra_script %}
+    </body>
+</html>

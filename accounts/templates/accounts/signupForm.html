@@ -1,0 +1,79 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block extra_head %}
+{% block title %}<title>Sign up</title>{% endblock %}
+<link href="{% static 'accounts/css/style_signup.css' %}" rel="stylesheet">
+<style>
+  @media only screen and (max-width: 500px) { /*Apply to device has width is equal or less than 500px */
+    /* For mobile phones: */
+    #register-form-wrap {
+      width: 100%;
+      padding: 0;
+      margin: 30px 0 0 0;
+    }
+  }
+</style>
+{% endblock extra_head %}
+{% block content %}
+<div id="register-form-wrap">
+  <div class='bookingcare-logo'>
+    <a href="{% url 'homepage' %}">&af;</a>
+  </div>
+  <h2><b>Sign up</b></h2>
+  <form id="register-form" method="post">
+    <div style="text-align:left;font-size:20px;">
+      <!-- {{ user_form.as_p }} -->
+      <p><input type="text" id="id_username" name="username" placeholder="Username" required></p>
+      <p><input type="email" id="id_email" name="email" placeholder="Email" required></p>
+      <p><input type="password" id="id_password" name="password" placeholder="Password" required></p>
+      <p><input type="password" id="id_password2" name="password2" placeholder="Repeat password" required></p>
+      {% csrf_token %}
+      <div style="text-align: center;">
+        <p style="display:inline;text-align: center;">
+          <input style="display:inline;width:12px;height:12px;" type="checkbox" id="showhide" name="showhide" onclick="Click()">
+          <p style="display:inline;font-size:16px;font-style:normal;color:rgb(94, 93, 93)">Show password</p>
+        </p>
+      </div>
+    </div>
+    <p>
+      <input type="submit" id="register" value="Register now!">
+    </p>
+
+    {% for message in messages %}
+    <div id="notification" style="background-color: rgb(222, 99, 99); margin-left: -60px; margin-right: -60px; padding-left: 10px; padding-right: 10px;">
+      <p style="color:rgb(255, 255, 255);font-size:15px;font-weight: bold;padding:10px 0px;">Error: {{ message }}</p>   
+    </div>
+    {% endfor %}
+
+    <a style="font-size: 20px" href="{% url 'signin' %}">Back to login!</a>
+  </form>
+  
+  <div id="footer-register-form">
+    <p>"Booking care" want to save your health!<p>
+  </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+function Click() {
+  var temp1 = document.getElementById("id_password");
+  var temp2 = document.getElementById("id_password2")
+  if (temp1.type === "password") {
+      temp1.type = "text";
+      temp2.type = "text";
+  }
+  else {
+      temp1.type = "password";
+      temp2.type = "password";
+  }
+}
+</script>
+
+<script type="text/javascript">
+  setTimeout(function(){
+    document.getElementById("notification").innerHTML = '';
+}, 4000);
+</script>
+{% endblock script %}
+

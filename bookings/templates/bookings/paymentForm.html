@@ -1,0 +1,182 @@
+{% extends 'homepage/base.html' %}
+{% block extra_head %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .frame
+        {
+            margin-top:100px;
+            margin-left:400px;
+            margin-right:400px;
+            margin-bottom:100px;
+            padding-bottom:20px;
+            background-color: #adbfc3;
+            border-radius: 10px;
+            border-radius: 4px;
+            box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.5);
+            border: 1px black solid;            
+        }
+        .frame1
+        {
+            margin-top:10px;
+            margin-left:20px;
+            margin-right:20px;
+            margin-bottom:10px;
+            background-color: rgb(255, 255, 255);
+            padding-bottom:10px;
+            border: 0.5px rgb(31, 31, 31) solid;
+        }
+        .select_method
+        {
+            margin-top:20px;
+            margin-bottom: 30px;
+            margin-left: 50px;
+            display: block;
+        }
+        body
+        {
+            background-color: #818a8c;
+        }
+        .info_basic
+        {
+            margin-left:50px;
+        }
+        input[type=submit] 
+        {
+            width: 25%;
+            background-color: #adbfc3;
+            color: rgb(0, 0, 0);
+            padding: 10px 10px;
+            margin: 8px 0;
+            border: 0.5px rgb(0, 0, 0) solid;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left:260px;
+            margin-right:260px;
+            font-weight: bolder;
+        }
+
+        input[type=submit]:hover 
+        {
+            background-color: #65868d;
+        }
+    </style>
+{% endblock extra_head %}
+{% block content %}
+    <div class="frame">
+        <h1 style="text-align:center; font-size:40px; padding-top:10px;"><b>Thông tin thanh toán</b></h1>
+        <form class="frame1" action="" method="post" id="payment-form">
+            {% csrf_token %}
+            <div class="info_basic">
+                <h1 style="text-align:left; font-size:20px;padding-top:10px;"><b>Bác sĩ đặt khám:</b>{{booking.doctor.last_name}} {{booking.doctor.first_name}}</h1>
+                <h1 style="text-align:left; font-size:20px" id="exam-time"></h1>
+                <h1 style="text-align:left; font-size:20px"><b>Tổng phí:</b>{{booking.doctor.details.examination_price}}</h1>
+                <label style="text-align:left; font-size:20px" for="method">Chọn hình thức thanh toán:</label>
+                <select style="font-size:16px;" name="payment" id="payment">
+                    {% for method in methods %}
+                        {% if method.value == "Cash" %}
+                            <option value="{{method.value}}">Thanh toán bằng tiền mặt</option>
+                        {% elif method.value == "Momo" %}
+                            <option value="{{method.value}}">Thanh toán bằng Momo</option>
+                        {% elif method.value == "Visa" %}
+                            <option value="{{method.value}}">Thanh toán bằng Visa</option>
+                        {% elif method.value == "ATM" %}
+                            <option value="{{method.value}}">Thanh toán bằng ATM</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="Momo" class="select_method">
+                <p>Vui lòng quét mã bên dưới để thanh toán:</p>
+                <img src="https://aebits-wp.s3.me-south-1.amazonaws.com/wp-content/uploads/2018/06/Icon-950x950.png" width="350px" height="350px" style="position: relative; left: -12px;">
+            </div>
+
+            <div id="Visa" class="select_method">
+                <div style="margin-bottom:10px;">
+                    <p>Nhập đầy đủ thông tin Visa để thanh toán:</p>
+                    <p style="display:inline; margin-right:38px;margin-bottom: 10px;">Số thẻ:</p><input style="width:450px;" type="text" id="idvisa" placeholder="48574...">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <p style="display: inline; margin-right:10px">CVV/CVV2:</p><input style="width:450px;" type="text" id="cvv" placeholder="cvv or cvv2">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <p style="display: inline; margin-right:35px">Số tiền:</p><input style="width:450px;" type="text" id="money" placeholder="200.000">
+                </div>
+            </div>
+
+            <div id="ATM" class="select_method">
+                <div style="margin-bottom:10px;">
+                    <p>Nhập đầy đủ thông tin của thẻ ngân hàng để thanh toán:</p>
+                    <p style="display:inline; margin-right:38px;margin-bottom: 10px;">Chọn ngân hàng: </p>
+                    <select name="bank" id="bank">
+                        <option value="AGRIBANK">Ngân hàng AGRIBANK</option>
+                        <option value="VIETCOMBANK">Ngân hàng VIETCOMBANK</option>
+                        <option value="SACCOMBANK">Ngân hàng SACCOMBANK</option>
+                        <option value="OCB">Ngân hàng OCB</option>
+                        <option value="BIDV">Ngân hàng BIDV</option>
+                        <option value="VIETINBANK">Ngân hàng VIETINBANK</option>
+                        <option value="NCB">Ngân hàng NCB</option>
+                        <option value="SAIGONBANK">Ngân hàng SAIGONBANK</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <p style="display:inline; margin-right:44px;margin-bottom: 10px;">Số thẻ:</p><input style="width:450px;" type="text" id="idcard" placeholder="48574...">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <p style="display: inline; margin-right:10px">Chủ sở hữu:</p><input style="width:450px;" type="text" id="name" placeholder="Nguyen Van A">
+                </div>
+                <div style="margin-bottom:10px;">
+                    <p style="display: inline; margin-right:41px">Số tiền:</p><input style="width:450px;" type="text" id="money" placeholder="200.000">
+                </div>
+            </div>
+            <br>
+            <input id="submit-btn" type="submit" value="Chấp nhận">
+        </form>
+    </div>
+{% endblock content %}
+{% block extra_script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.6/dayjs.min.js" integrity="sha512-hcV6DX35BKgiTiWYrJgPbu3FxS6CsCjKgmrsPRpUPkXWbvPiKxvSVSdhWX0yXcPctOI2FJ4WP6N1zH+17B/sAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.6/locale/vi.min.js" integrity="sha512-z+cfgsx3y2byh1WqQA03XQHxtM48Km+N1tRoJGX4xWBa29cD8du/Imistc6DY7rzcMw5YLMereWcvzZw5uNB6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {% comment %} Change UI when method payment change {% endcomment %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#payment").on('change', function(){
+                $(".select_method").hide();
+                $("#" + $(this).val()).fadeIn(700);
+            }).change();
+        });
+    </script>
+    {% comment %} Format exam time {% endcomment %}
+    <script type="text/javascript">
+        const examTime = document.querySelector("#exam-time")
+
+        const obj = dayjs("{{booking.schedule.date|date:'Y M d'}}");
+        const html = `<b>Thời gian:</b> {{booking.schedule.time_slot.value}} - ${get_day_of_week(obj.day())} - ${obj.format('DD/MM')}`;
+        examTime.insertAdjacentHTML('beforeend', html);
+    </script>
+    {% comment %} Submit payment {% endcomment %}
+    <script type="text/javascript">
+        const method = document.querySelector("#payment");
+        const csrfmiddlewaretoken = document.querySelector('#payment-form input').value;
+        const total = "{{booking.doctor.details.examination_price}}".slice(1).replace(",", "");
+
+        $(document).on('submit', '#payment-form', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type:"POST",
+                url: "{% url 'savePayment' %}",
+                data:{
+                    csrfmiddlewaretoken: csrfmiddlewaretoken,
+                    booking_id: {{booking.id}},
+                    method: method.value,
+                    total: total
+                },
+                success: function( data ) {
+                   alert("You have successfully booked!");
+                   $(location).attr('href', "{% url 'homepage' %}");
+                }
+            });
+        });
+    </script>
+{% endblock extra_script %}

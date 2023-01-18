@@ -1,0 +1,240 @@
+{% extends 'homepage/base.html' %}
+{% load homepage_tags %}
+{% load static %}
+{% block extra_head %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'homepage/css/home.css' %}">
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'homepage/slick-1.8.1/slick/slick.css' %} "/>
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'homepage/slick-1.8.1/slick/slick-theme.css' %} "/> {% endcomment %}
+{% endblock extra_head %}
+{% block content %}
+    {% comment %} Banner {% endcomment %}
+    <section id='banner'>
+        <div id="banner__search">
+            <h1 id="banner__title">
+                Nền tảng y tế
+                <br>
+                <b>Chăm sóc sức khoẻ toàn diện</b>
+            </h1>
+            <div id="banner__search-form">
+                <div id="banner__search-form-input">
+                  <form id="search_form" action="" method="get">
+                    {% csrf_token %}
+                    <i id="search_submit" class="search-icon" style='cursor: pointer;'></i>
+                    {{form}}
+                    <input type="submit" id="submit-btn" value="Submit" style="display: none;"/>
+                  </form>
+                </div>
+                <div id="banner__search-form-dropdown">
+                </div>
+            </div>
+            <div id="banner__shorcut-download">
+                <i class='google-play-badge'><a href="#">&af;</a></i>
+                <i class='app-store-badge'><a href="#">&af;</a></i>
+            </div>
+        </div>
+        <div id="banner__choices">
+            <ul>
+                <li>
+                    <a href="{% url 'findSpecialist' %}">
+                        <i class='khamchuyenkhoa-icon banner__choices-img'></i>
+                        Khám
+                        <br>
+                        Chuyên khoa
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='khamtuxa-icon banner__choices-img'></i>
+                        Khám
+                        <br>
+                        từ xa
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='khamtongquat-icon banner__choices-img'></i>
+                        Khám
+                        <br>
+                        tổng quát
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='xetnghiemyhoc-icon banner__choices-img'></i>
+                        Xét nghiệm
+                        <br>
+                        y học
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='suckhoetinhthan-icon banner__choices-img'></i>
+                        Sức khoẻ
+                        <br>
+                        tinh thần
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='khamnhakhoa-icon banner__choices-img'></i>
+                        Khám
+                        <br>
+                        nha khoa
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='goiphauthuat-icon banner__choices-img'></i>
+                        Gói
+                        <br>
+                        phẫu thuật
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='sanphamyte-icon banner__choices-img'></i>
+                        Sản phẩm
+                        <br>
+                        y tế
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='suckhoedoanhnghiep-icon banner__choices-img'></i>
+                        Sức khoẻ
+                        <br>
+                        doanh nghiệp
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    {% comment %} Segments {% endcomment %}
+    <section class="segment background--gray">
+        <div class="segment__head">
+            <h2>Chuyên khoa phổ biến</h2>
+            <a href="{% url 'findSpecialist' %}">Xem thêm</a>
+        </div>
+        <div class="segment__content segment__specialist slick-4">
+            {% for specialist in specialists %}
+                <a href="{% url 'specialistDetail' specialist.id %}">
+                    {% if specialist.avatar %}
+                        <img data-lazy="{{specialist.avatar.url}}" alt="specialist-img" class="segment__specialist-img" loading="lazy">
+                    {% else %}
+                        <img data-lazy="" alt="specialist-img" class="segment__specialist-img" loading="lazy">
+                    {% endif %}
+                    {{specialist.name}}
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="segment background--white">
+        <div class="segment__head">
+            <h2>Cơ sở y tế nổi bật</h2>
+            <a href="{% url 'findClinic' %}">Xem thêm</a>
+        </div>
+        <div class="segment__content segment__clinic slick-4">
+            {% for clinic in clinics %}
+                <a href="{% url 'clinicDetail' clinic.id %}">
+                    {% if clinic.avatar %}
+                        <img data-lazy="{{clinic.Cover_photo.url}}" alt="clinic-img" class="segment__clinic-img" loading="lazy">
+                    {% else %}
+                        <img data-lazy="" alt="clinic-img" class="segment__clinic-img" loading="lazy">
+                    {% endif %}
+                    {{clinic.name}}
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="segment background--gray">
+        <div class="segment__head">
+            <h2>Bác sĩ nổi bật tuần qua</h2>
+            <a href="{% url 'findDoctor' %}">Xem thêm</a>
+        </div>
+        <div class="segment__content segment__doctor slick-4">
+            {% for doctor in doctors %}
+                <a href="{% url 'doctorDetail' doctor.id %}">
+                    {% if doctor.doctor.avatar %}
+                        <img loading="lazy" data-lazy="{{doctor.doctor.avatar.url}}" alt="doctor-img" class="segment__doctor-img" >
+                    {% else %}
+                        <img loading="lazy" data-lazy="" alt="doctor-img" class="segment__doctor-img" >
+                    {% endif %}
+                    <h3>{{doctor.degree}} {{doctor.doctor.last_name}} {{doctor.doctor.first_name}}</h3>
+                    {% for specialist in doctor.specialists.all|slice:":1" %}
+                        <h4>{{specialist.name}}</h4>
+                    {% endfor %}
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="segment background--white">
+        <div class="segment__head">
+            <h2>Truyền thông nói về BookingCare</h2>
+        </div>
+        <div class="segment__content segment__truyenthong">
+            <iframe width="50%"
+                    height="432"
+                    src="https://www.youtube.com/embed/7tiR7SI4CkI"
+                    title="BookingCare trên VTV1 ngày 21/02/2018 - Chương trình Cà phê khởi nghiệp"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                    ></iframe>
+            <ul>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/suckhoedoisong.png' %}" alt="suckhoedoisong-img" class="segment__truyenthong-img suckhoedoisong-img">&af;</a>
+                </li>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/vtv1.png' %}" alt="vtv1-img" class="segment__truyenthong-img vtv1-img">&af;</a>
+                </li>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/ictnews.png' %}" alt="ictnews-img" class="segment__truyenthong-img ictnews-img">&af;</a>
+                    
+                </li>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/vnexpress.png' %}" alt="vnexpress-img" class="segment__truyenthong-img vnexpress-img">&af;</a>
+                    
+                </li>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/vtcnews.png' %}" alt="vtcnews-img" class="segment__truyenthong-img vtcnews-img">&af;</a>
+                </li>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/cuc-cong-nghe-thong-tin-bo-y-te-2.png' %}" alt="cuccntt-img" class="segment__truyenthong-img cuccntt-img">&af;</a>
+                </li>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/infonet.png' %}" alt="infonet-img" class="segment__truyenthong-img infonet-img">&af;</a>
+                </li>
+                <li>
+                    <a href="#"><img loading="lazy" src="{% static 'homepage/images/segment-communication/vtcgo.png' %}" alt="vtc-img" class="segment__truyenthong-img vtc-img">&af;</a>
+                    
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="segment background--white">
+        <div class="segment-download">
+            <h2>Tải ứng dụng BookingCare</h2>
+            <ul>
+                <li>Đặt khám nhanh hơn</li>
+                <li>Nhận thông báo từ hệ thống</li>
+                <li>Nhận hướng dẫn đi khám chi tiết</li>
+            </ul>
+            <div class="badge-download">
+                <i class='google-play-badge'><a href="#">&af;</a></i>
+                <i class='app-store-badge'><a href="#">&af;</a></i>
+            </div>
+            <a href="#">Hoặc mở liên kết: <strong>https://bookingcare.vn/app</strong> </a>
+        </div>
+    </section>
+{% endblock content %}
+{% block extra_script %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'homepage/slick-1.8.1/slick/slick.min.js' %} "></script>
+    <script type="text/javascript" src="{% static 'homepage/js/main.js' %} "></script>
+{% endblock extra_script %}
